@@ -1,0 +1,10 @@
+option.PIXEL=像素化
+value.PIXEL.0=160*120
+value.PIXEL.1=320*240
+value.PIXEL.2=640*480
+value.PIXEL.3=1280*960
+value.PIXEL.4=关闭
+
+option.MOTIONBLUR=动态模糊
+value.MOTIONBLUR.0=关闭
+value.MOTIONBLUR.1=开启
