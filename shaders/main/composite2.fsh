@@ -2,6 +2,7 @@
 /* bloom */
 uniform sampler2D colortex0;
 in vec2 texcoord;
+#include "/settings.glsl"
 
 /* RENDERTARGETS: 0,3,4 */
 layout(location = 0) out vec4 color;
@@ -20,14 +21,14 @@ float softThreshold(float lum, float threshold, float knee) {
 void main() {
     vec3 srcColor = texture(colortex0, texcoord).rgb;
     float lum = dot(srcColor, vec3(0.2126, 0.7152, 0.0722));
-
-    float threshold     = 0.3;     // 发光最小亮度
-    float knee            = 0.5;     // 软阈值范围
-    float bloomScale  = 0.03;   // 发光强度缩放
-    float noiseScale1 = 0.005;  // 近距离噪声幅度
-    float noiseScale2 = 0.012;  // 远距离噪声幅度
-    float exponent     = 2.0;     // 发光强度指数
-
+    /*
+    float threshold = 0.3; // 发光最小亮度
+    float knee = 0.5; // 软阈值范围
+    float bloomScale = 0.03; // 发光强度缩放
+    float noiseScale1 = 0.005; // 近距离噪声幅度
+    float noiseScale2 = 0.012; // 远距离噪声幅度
+    float exponent = 2.0; // 强度
+    */
     float weight = softThreshold(lum, threshold, knee);
 
     vec2 noise = vec2(

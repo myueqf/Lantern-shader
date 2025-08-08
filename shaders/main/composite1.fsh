@@ -28,7 +28,7 @@ void main() {
 
   float depth = texture(depthtex0, texcoord).r;
   
-  /* 雾效  */
+  /* 雾效 */
   if(isEyeInWater == 1) {
     vec3 underwaterFogColor = vec3(0.1, 0.3, 0.5);
     
