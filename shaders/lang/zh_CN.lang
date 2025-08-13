@@ -50,3 +50,5 @@ value.DOF_STRENGTH.8.0=默认
 option.DOF_SAMPLE=采样次数
 value.DOF_SAMPLE.24=默认
 option.DOF_SAMPLE.comment=次数越多性能开销越大嗷QAQ
+
+option.BRIGHTNESS_GAIN=昼夜亮度增益

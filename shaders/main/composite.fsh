@@ -1,6 +1,7 @@
 #version 330 compatibility
 
 #include /lib/distort.glsl
+#include /settings.glsl
 
 uniform sampler2D shadowtex0;
 uniform sampler2D depthtex0;
@@ -41,8 +42,12 @@ void main() {
 
     // 昼夜循环
     float timeNormalized = mod((worldTime + 8000.0) / 24000.0, 1.0);
+#if BRIGHTNESS_GAIN >= 0.1
+    float dayNightStrength = (0.5 + BRIGHTNESS_GAIN) + 0.5 * cos((timeNormalized - 0.5) * 6.2832);
+#else
     float dayNightStrength = 0.5 + 0.5 * cos((timeNormalized - 0.5) * 6.2832);
-    
+#endif
+
     // 阴影计算
     vec3 NDCPos = vec3(texcoord.xy, depth) * 2.0 - 1.0;
     vec3 viewPos = projectAndDivide(gbufferProjectionInverse, NDCPos);
