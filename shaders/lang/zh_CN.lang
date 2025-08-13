@@ -52,3 +52,10 @@ value.DOF_SAMPLE.24=默认
 option.DOF_SAMPLE.comment=次数越多性能开销越大嗷QAQ
 
 option.BRIGHTNESS_GAIN=昼夜亮度增益
+value.BRIGHTNESS_GAIN.0.0=关闭
+
+option.FOG_SIZE=雾大小
+value.FOG_SIZE.100.0=关闭雾
+option.FOG_COVER_SKY=雾覆盖天空
+value.FOG_COVER_SKY.1=开启
+value.FOG_COVER_SKY.0=关闭

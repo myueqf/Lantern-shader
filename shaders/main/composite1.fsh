@@ -1,6 +1,7 @@
 #version 330 compatibility
 
 #include "/lib/distort.glsl"
+#include /settings.glsl
 
 uniform sampler2D colortex0;
 uniform sampler2D depthtex0;
@@ -44,10 +45,11 @@ void main() {
       color.rgb = mix(color.rgb, underwaterFogColor, clamp(underwaterFogFactor, 0.0, 0.9));
     }
   } else {
-    // 普通雾效
+    #if FOG_COVER_SKY == 0
     if(depth == 1.0) {
       return;
     }
+    #endif
     vec3 NDCPos = vec3(texcoord.xy, depth) * 2.0 - 1.0;
     vec3 viewPos = projectAndDivide(gbufferProjectionInverse, NDCPos);
     float dist = length(viewPos) / far;
@@ -56,9 +58,9 @@ void main() {
 
     // ===== 雨雾 =====
     float fogFactor = mix(
-    exp(-10 * (1.0 - dist)),   // 非雨天雾效
-    exp(-10 * (0.3 - dist)),   // 雨天雾效
-    smoothstep(0.0, 0.3, rainStrength)  // 平滑过渡
+    exp(-10 * (FOG_SIZE - dist)),   // 普通雾
+    exp(-10 * (0.3 - dist)),   // 雨雾
+    smoothstep(0.0, 0.3, rainStrength)
     );
     fogFactor = clamp(fogFactor, 0.0, 1.0);
     color.rgb = mix(color.rgb, fogColor, fogFactor);

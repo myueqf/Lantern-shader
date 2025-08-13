@@ -26,3 +26,7 @@ float exponent = EXPONENT;
 
 /* 昼夜亮度增益 */
 #define BRIGHTNESS_GAIN 0.0 // [0.1 0.2 0.3 0.4 0.5 0.6 0.7]
+
+/* 普通雾大小 */
+#define FOG_SIZE 1.0 // [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 100.0]
+#define FOG_COVER_SKY 0 // [0 1] 雾覆盖天空
