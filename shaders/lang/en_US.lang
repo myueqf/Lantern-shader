@@ -1,0 +1,61 @@
+screen.QAQ=Lantern Shader
+screen.QAQ.comment=QAQ
+screen.AwA=Motion Blur
+screen.OvO=Bloom
+screen.XwX=Depth of Field
+screen.QwQ=Other
+
+option.LIGHT_ONLY=Pure White World
+value.LIGHT_ONLY.0=Off
+value.LIGHT_ONLY.1=On
+option.LIGHT_ONLY.comment=DEBUG\nRender blocks as pure white~ Might create unique screenshots..?
+
+option.PIXEL=Pixelation Filter
+value.PIXEL.0=160*120
+value.PIXEL.1=320*240
+value.PIXEL.2=640*480
+value.PIXEL.3=1280*960
+value.PIXEL.4=Off
+option.PIXEL.comment=Does not improve performance
+
+option.MOTIONBLUR=Motion Blur
+value.MOTIONBLUR.0=Off
+value.MOTIONBLUR.1=On
+
+option.EXPONENT=Bloom
+value.EXPONENT.0.5=Very Weak
+value.EXPONENT.1.0=Weak
+value.EXPONENT.1.5=Default
+value.EXPONENT.2.0=Strong
+value.EXPONENT.2.5=Very Strong
+option.EXPONENT.comment=(=^･ω･^=)
+option.THRESHOLD=Minimum Trigger
+value.THRESHOLD.0.1=Very Dark
+value.THRESHOLD.0.2=Dark
+value.THRESHOLD.0.3=Default
+value.THRESHOLD.0.4=Bright
+value.THRESHOLD.0.5=Very Bright
+option.THRESHOLD.comment=Set the minimum brightness to trigger bloom
+
+option.DOF=Depth of Field
+value.DOF.1=On
+value.DOF.0=Off
+option.DOF.comment=Will increase performance overhead
+option.DOFDEBUG=Debug
+value.DOFDEBUG.1=On
+value.DOFDEBUG.0=Off
+option.DOF_STRENGTH=Strength
+value.DOF_STRENGTH.8.0=Default
+option.DOF_SAMPLE=Sample Count
+value.DOF_SAMPLE.24=Default
+option.DOF_SAMPLE.comment=More samples increase performance overhead
+
+option.BRIGHTNESS_GAIN=Day/Night Brightness Gain
+value.BRIGHTNESS_GAIN.0.0=Off
+
+option.FOG_SIZE=Fog Size
+value.FOG_SIZE.100.0=Fog Off
+option.FOG_COVER_SKY=Fog Cover Sky
+value.FOG_COVER_SKY.1=On
+value.FOG_COVER_SKY.0=Off
+
