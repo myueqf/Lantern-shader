@@ -53,14 +53,13 @@ void main() {
     float dist = length(viewPos) / far;
     // float fogFactor = exp(-10 * (0.3 - dist)); // 值越小雾越浓
     // color.rgb = mix(color.rgb, fogColor, clamp(fogFactor, 0.0, 1.0));
-    
+
     // ===== 雨雾 =====
-    float fogFactor;
-    if(rainStrength >= 0.3){
-        fogFactor = exp(-10 * (0.3 - dist));
-    }else {
-        fogFactor = exp(-10 * (1.0 - dist));
-    }
+    float fogFactor = mix(
+    exp(-10 * (1.0 - dist)),   // 非雨天雾效
+    exp(-10 * (0.3 - dist)),   // 雨天雾效
+    smoothstep(0.0, 0.3, rainStrength)  // 平滑过渡
+    );
     fogFactor = clamp(fogFactor, 0.0, 1.0);
     color.rgb = mix(color.rgb, fogColor, fogFactor);
     // ==============
