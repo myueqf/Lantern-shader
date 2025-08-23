@@ -1,4 +1,4 @@
-screen.QAQ=Lantern Shader
+screen.QAQ=§bLantern Shader
 screen.QAQ.comment=QAQ
 screen.AwA=Motion Blur
 screen.OvO=Bloom
@@ -59,3 +59,8 @@ option.FOG_COVER_SKY=Fog Cover Sky
 value.FOG_COVER_SKY.1=On
 value.FOG_COVER_SKY.0=Off
 
+option.PIXELSHADOW=Pixel Shadow
+value.PIXELSHADOW.true=On
+value.PIXELSHADOW.false=Off
+
+option.SKYCOLORSTYLE=Sky Color Style
