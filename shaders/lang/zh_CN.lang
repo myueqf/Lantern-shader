@@ -24,8 +24,8 @@ value.MOTIONBLUR.1=开启
 
 option.EXPONENT=泛光
 value.EXPONENT.0.5=极弱
-value.EXPONENT.1.0=弱
-value.EXPONENT.1.5=默认
+value.EXPONENT.1.0=默认
+value.EXPONENT.1.5=较强
 value.EXPONENT.2.0=强
 value.EXPONENT.2.5=极强
 option.EXPONENT.comment=（=^･ω･^=）
