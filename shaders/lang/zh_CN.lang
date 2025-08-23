@@ -1,4 +1,4 @@
-screen.QAQ=LanternShader
+screen.QAQ=§bLanternShader
 screen.QAQ.comment=QAQ
 screen.AwA=动态模糊
 screen.OvO=泛光
@@ -59,3 +59,9 @@ value.FOG_SIZE.100.0=关闭雾
 option.FOG_COVER_SKY=雾覆盖天空
 value.FOG_COVER_SKY.1=开启
 value.FOG_COVER_SKY.0=关闭
+
+option.PIXELSHADOW=像素阴影
+value.PIXELSHADOW.true=§a开启
+value.PIXELSHADOW.false=§c关闭
+
+option.SKYCOLORSTYLE=天空样式

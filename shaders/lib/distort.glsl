@@ -4,6 +4,7 @@ vec3 distortShadowClipPos(vec3 shadowClipPos){
   return shadowClipPos;
 }
 
-const bool shadowtex0Nearest = true;
+#define PIXELSHADOW true // [true false]
+const bool shadowtex0Nearest = PIXELSHADOW;
 const bool shadowtex1Nearest = true;
 const bool shadowcolor0Nearest = true;
