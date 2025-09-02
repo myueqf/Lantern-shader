@@ -50,4 +50,5 @@ void main() {
         vec3 pos = screenToView(vec3(gl_FragCoord.xy / vec2(viewWidth, viewHeight), 1.0));
         color = vec4(calcSkyColor(normalize(pos)), 1.0);
     }
+    color *= pow(1.5, 1.3); // 调整下曝光XwX
 }
