@@ -53,6 +53,9 @@ option.DOF_SAMPLE.comment=More samples increase performance overhead
 option.BRIGHTNESS_GAIN=Day/Night Brightness Gain
 value.BRIGHTNESS_GAIN.0.0=Off
 
+option.SKYLIGHT_GAIN=Sky Light Gain
+value.SKYLIGHT_GAIN.0.0=Off
+
 option.FOG_SIZE=Fog Size
 value.FOG_SIZE.100.0=Fog Off
 option.FOG_COVER_SKY=Fog Cover Sky

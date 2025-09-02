@@ -70,7 +70,14 @@ void main() {
 
     // 光照计算
     vec3 blocklight = lightmap.r * lightmap.r * blocklightColor;
+
+    //天空光增益和计算～
+    #if SKYLIGHT_GAIN == 0.1
+    vec3 skylight = lightmap.g * (SKYLIGHT_GAIN + skylightColor) * dayNightStrength;
+    #else
     vec3 skylight = lightmap.g * skylightColor * dayNightStrength;
+    #endif
+
     vec3 sunlight = sunlightColor * clamp(dot(worldLightVector, normal), 0.0, 1.0) * shadow * (1 - rainStrength) * dayNightStrength;
 
     color = texture(colortex0, texcoord);
