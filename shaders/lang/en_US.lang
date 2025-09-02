@@ -64,3 +64,6 @@ value.PIXELSHADOW.true=On
 value.PIXELSHADOW.false=Off
 
 option.SKYCOLORSTYLE=Sky Color Style
+
+option.GAMMA=Gamma
+value.GAMMA.0.95=Default

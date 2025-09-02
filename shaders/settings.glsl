@@ -33,3 +33,6 @@ float exponent = EXPONENT;
 
 /* 天空颜色样式 */
 #define SKYCOLORSTYLE 0 // [0 1]
+
+/* Gamma */
+#define GAMMA 0.95 // [0.55 0.65 0.75 0.85 0.95 1.00 1.25 1.33 1.40 1.55]

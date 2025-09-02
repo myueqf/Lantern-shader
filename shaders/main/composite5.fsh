@@ -18,5 +18,11 @@ void main() {
     vec2 pixelCoord = floor(texCoord * gridRes) / gridRes;
     vec3 color = texture2D(gColor, pixelCoord).rgb;
 
+    // 曝光
+    //color *= pow(2.0, 1.0);
+
+    // gamma
+    color = pow(color, vec3(GAMMA));
+
     gl_FragData[0] = vec4(color, 1.0);
 }

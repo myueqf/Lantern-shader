@@ -65,3 +65,6 @@ value.PIXELSHADOW.true=§a开启
 value.PIXELSHADOW.false=§c关闭
 
 option.SKYCOLORSTYLE=天空样式
+
+option.GAMMA=伽马校正
+value.GAMMA.0.95=默认
