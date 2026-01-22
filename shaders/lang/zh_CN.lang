@@ -71,3 +71,8 @@ option.SKYCOLORSTYLE=天空样式
 
 option.GAMMA=伽马校正
 value.GAMMA.0.95=默认
+
+option.SHADOW_SOFT=柔和阴影
+option.SHADOW_SOFT.comment=或许人们都喜欢温柔的东西？\n（虽然本质上还是马赛克）
+value.SHADOW_SOFT.0=关闭
+value.SHADOW_SOFT.1=开启

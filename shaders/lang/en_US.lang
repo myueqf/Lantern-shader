@@ -70,3 +70,8 @@ option.SKYCOLORSTYLE=Sky Color Style
 
 option.GAMMA=Gamma
 value.GAMMA.0.95=Default
+
+option.SHADOW_SOFT=Soft Shadows
+option.SHADOW_SOFT.comment=Perhaps everyone prefers gentle things?\n(Though it's essentially still just mosaics)
+value.SHADOW_SOFT.0=Off
+value.SHADOW_SOFT.1=On

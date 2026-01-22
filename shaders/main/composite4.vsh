@@ -1,4 +1,4 @@
-#version 130
+#version 330 compatibility
 
 varying vec2 TexCoords;
 

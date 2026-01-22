@@ -20,8 +20,8 @@ uniform mat4 shadowProjection;
 
 // 颜色
 const vec3 blocklightColor = vec3(1.15, 1.0, 0.9);
-const vec3 skylightColor = vec3(0.7, 0.7, 1.0);
-const vec3 sunlightColor = vec3(0.9, 0.8, 0.7);
+const vec3 skylightColor = vec3(0.945, 0.910, 0.949);
+const vec3 sunlightColor = vec3(0.263, 0.259, 0.396);
 
 in vec2 texcoord;
 
@@ -65,8 +65,21 @@ void main() {
 
     vec3 lightVector = normalize(shadowLightPosition);
     vec3 worldLightVector = mat3(gbufferModelViewInverse) * lightVector;
-    
+
+    #if SHADOW_SOFT == 0
     float shadow = step(shadowScreenPos.z, texture(shadowtex0, shadowScreenPos.xy).r);
+    #elif SHADOW_SOFT == 1
+    // --- 软阴影 ---
+    float shadow = 0.0;
+    float shadowRadius = 0.0008; // 模糊半径
+
+    shadow += step(shadowScreenPos.z, texture(shadowtex0, shadowScreenPos.xy + vec2( shadowRadius,  shadowRadius)).r);
+    shadow += step(shadowScreenPos.z, texture(shadowtex0, shadowScreenPos.xy + vec2(-shadowRadius,  shadowRadius)).r);
+    shadow += step(shadowScreenPos.z, texture(shadowtex0, shadowScreenPos.xy + vec2( shadowRadius, -shadowRadius)).r);
+    shadow += step(shadowScreenPos.z, texture(shadowtex0, shadowScreenPos.xy + vec2(-shadowRadius, -shadowRadius)).r);
+    shadow /= 4.0;
+    // -----------------------
+    #endif
 
     // 光照计算
     vec3 blocklight = lightmap.r * lightmap.r * blocklightColor;

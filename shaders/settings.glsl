@@ -38,3 +38,6 @@ float exponent = EXPONENT;
 
 /* Gamma */
 #define GAMMA 0.95 // [0.55 0.65 0.75 0.85 0.95 1.00 1.25 1.33 1.40 1.55]
+
+/* 柔和阴影 */
+#define SHADOW_SOFT 1 // [0 1]

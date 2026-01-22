@@ -3,11 +3,14 @@
 uniform sampler2D colortex0;
 in vec2 texcoord;
 #include "/settings.glsl"
+#define BLOOM_STYLE 1
 
 /* RENDERTARGETS: 0,3,4 */
 layout(location = 0) out vec4 color;
 layout(location = 3) out vec4 bloom;
 layout(location = 4) out vec4 farbloom;
+
+const bool colortex0MipmapEnabled = true;
 
 float rand(vec2 co) {
     return fract(sin(dot(co, vec2(41.935, 99.122))) * 87153.6598);
@@ -30,23 +33,27 @@ void main() {
     float exponent = 2.0; // 强度
     */
     float weight = softThreshold(lum, threshold, knee);
-
-    vec2 noise = vec2(
-        rand(texcoord),
-        rand(texcoord + vec2(1.0))
-    ) * 2.0 - 1.0;
-
-    vec2 uv1 = texcoord + noise * noiseScale1;
-    vec2 uv2 = texcoord + noise * noiseScale2;
-
     color = vec4(srcColor, 1.0);
 
+    #if BLOOM_STYLE == 0
+    // ================= 噪声 =================
+    vec2 noise = vec2(
+    rand(texcoord),
+    rand(texcoord + vec2(1.0))
+    ) * 2.0 - 1.0;
+    vec2 uv1 = texcoord + noise * noiseScale1;
+    vec2 uv2 = texcoord + noise * noiseScale2;
     vec3 c1 = texture(colortex0, uv1).rgb;
     vec3 c2 = texture(colortex0, uv2).rgb;
-
     bloom.rgb    = pow(c1, vec3(exponent)) * bloomScale * weight;
     farbloom.rgb = pow(c2, vec3(exponent)) * bloomScale * weight;
+    #else
 
+    // ================= Mipmap =================
+    vec3 c1 = textureLod(colortex0, texcoord, 4.0).rgb;
+    vec3 c2 = textureLod(colortex0, texcoord, 7.0).rgb;
+    bloom.rgb    = pow(c1, vec3(exponent)) * bloomScale * weight;
+    farbloom.rgb = pow(c2, vec3(exponent)) * (bloomScale * 0.5) * weight;
+    #endif
     color.rgb += bloom.rgb + farbloom.rgb;
 }
-

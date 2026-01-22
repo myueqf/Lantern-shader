@@ -1,4 +1,4 @@
-#version 130
+#version 330 compatibility
 
 #include "/settings.glsl"
 #include "/lib/dofoffsets.glsl"

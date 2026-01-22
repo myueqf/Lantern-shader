@@ -1,6 +1,6 @@
 #version 330 compatibility
 
-const int shadowMapResolution = 1024; // 阴影图的分辨率XwX
+const int shadowMapResolution = 512; // 阴影图的分辨率XwX
 
 uniform sampler2D gtexture;
 
