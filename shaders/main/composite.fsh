@@ -21,7 +21,7 @@ uniform mat4 shadowProjection;
 // 颜色
 const vec3 blocklightColor = vec3(1.30, 0.85, 0.50);
 const vec3 skylightColor = vec3(0.85, 0.95, 1.10) + 1.5;
-const vec3 sunlightColor = vec3(1.20, 1.10, 0.95);
+const vec3 sunlightColor = vec3(1.30, 0.80, 0.70);
 
 in vec2 texcoord;
 
@@ -47,12 +47,25 @@ void main() {
     vec3 worldLightVector = mat3(gbufferModelViewInverse) * lightVector;
 
     // 昼夜循环
-    float timeNormalized = mod((worldTime + 8000.0) / 24000.0, 1.0);
-#if BRIGHTNESS_GAIN >= 0.1
-    float dayNightStrength = (0.5 + BRIGHTNESS_GAIN) + 0.5 * cos((timeNormalized - 0.5) * 6.2832);
-#else
-    float dayNightStrength = 0.5 + 0.5 * cos((timeNormalized - 0.5) * 6.2832);
-#endif
+    float t = mod(worldTime, 24000.0);
+    float dayNightStrength;
+
+    if (t > 12000.0 && t < 13000.0) {
+        //黄昏
+        dayNightStrength = smoothstep(13000.0, 12000.0, t);
+    }
+    else if (t >= 13000.0 && t <= 23000.0) {
+        // 深夜
+        dayNightStrength = 0.01;
+    }
+    else if (t > 23000.0 && t < 24000.0) {
+        //清晨
+        dayNightStrength = smoothstep(23000.0, 24000.0, t);
+    }
+    else {
+        // 白天
+        dayNightStrength = 1.0;
+    }
 
     // 阴影坐标转换
     vec3 NDCPos = vec3(texcoord.xy, depth) * 2.0 - 1.0;
@@ -108,8 +121,23 @@ void main() {
     color.rgb = clamp((x*(2.51*x+0.03))/(x*(2.43*x+0.59)+0.14), 0.0, 1.0);
 
     //color.rgb = pow(color.rgb, vec3(1.0/2.2));
+    if (t > 10000.0 && t < 13000.0) {
+        //黄昏
+        color.rgb *= mix(vec3(1.), vec3(1.1, 0.98, 0.75), 1.5);
+    }
+    else if (t >= 13000.0 && t <= 23000.0) {
+        //深夜
+        color.rgb *= mix(vec3(1.), vec3(1.15, 0.95, 0.8), 1.7);
+    }
+    else if (t > 22000.0 && t < 24000.0) {
+        //清晨
+        color.rgb *= mix(vec3(1.), vec3(1.1, 0.98, 0.75), 1.5);
+    }
+    else {
+        // 白天
+        color.rgb *= mix(vec3(1.), vec3(1.15, 0.95, 0.8), 0.15);
+    }
 
-    float noise = fract(sin(dot(texcoord, vec2(12.9898, 78.233))) * 43758.5453);
-    //color.rgb *= mix(vec3(1.), vec3(1.15, 0.95, 0.8), 1.0);
-    color.rgb += (noise - 0.5) * (1.0/255.0);
+    float noise = fract(sin(dot(texcoord, vec2(12.9898, 78.233) * float(worldTime))) * 43758.5453);
+    color.rgb += noise * 0.003;
 }
