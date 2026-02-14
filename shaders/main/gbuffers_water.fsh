@@ -16,7 +16,12 @@ layout(location = 2) out vec4 normalData;
 
 void main() {
     color = texture(gtexture, texcoord) * glcolor;
-    if (color.a <= 0.25) discard;
+
+    if (isEyeInWater == 1) {
+        color.a = 0.9;
+        return;
+    }
+    if (color.a <= 0.05) discard;
     if (color.a < 0.75) {
         ivec2 px = ivec2(gl_FragCoord.xy) % 2;
         if ((px.x ^ px.y) == 0) discard;
