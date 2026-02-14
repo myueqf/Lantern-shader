@@ -1,9 +1,9 @@
 screen.QAQ=§bLantern Shader
 screen.QAQ.comment=QAQ
-screen.AwA=Motion Blur
-screen.OvO=Bloom
+screen.AwA=Graphics
+screen.OvO=Environment
 screen.XwX=Depth of Field
-screen.QwQ=Other
+screen.QwQ=Miscellaneous
 
 option.LIGHT_ONLY=Pure White World
 value.LIGHT_ONLY.0=Off

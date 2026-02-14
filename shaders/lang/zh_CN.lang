@@ -1,9 +1,9 @@
 screen.QAQ=§bLanternShader
 screen.QAQ.comment=QAQ
-screen.AwA=动态模糊
-screen.OvO=泛光
+screen.AwA=画面
+screen.OvO=环境
 screen.XwX=景深
-screen.QwQ=其他
+screen.QwQ=杂项
 
 option.LIGHT_ONLY=纯白世界
 value.LIGHT_ONLY.0=关闭
