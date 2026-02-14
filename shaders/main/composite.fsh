@@ -19,9 +19,9 @@ uniform mat4 shadowModelView;
 uniform mat4 shadowProjection;
 
 // 颜色
-const vec3 blocklightColor = vec3(1.15, 1.0, 0.9);
-const vec3 skylightColor = vec3(0.945, 0.910, 0.949);
-const vec3 sunlightColor = vec3(0.263, 0.259, 0.396);
+const vec3 blocklightColor = vec3(1.30, 0.85, 0.50);
+const vec3 skylightColor = vec3(0.85, 0.95, 1.10) + 1.5;
+const vec3 sunlightColor = vec3(1.20, 1.10, 0.95);
 
 in vec2 texcoord;
 
@@ -40,6 +40,12 @@ void main() {
         return;
     }
 
+    vec2 lightmap = texture(colortex1, texcoord).rg;
+    vec3 encodedNormal = texture(colortex2, texcoord).rgb;
+    vec3 normal = normalize((encodedNormal - 0.5) * 2.0);
+    vec3 lightVector = normalize(shadowLightPosition);
+    vec3 worldLightVector = mat3(gbufferModelViewInverse) * lightVector;
+
     // 昼夜循环
     float timeNormalized = mod((worldTime + 8000.0) / 24000.0, 1.0);
 #if BRIGHTNESS_GAIN >= 0.1
@@ -48,23 +54,21 @@ void main() {
     float dayNightStrength = 0.5 + 0.5 * cos((timeNormalized - 0.5) * 6.2832);
 #endif
 
-    // 阴影计算
+    // 阴影坐标转换
     vec3 NDCPos = vec3(texcoord.xy, depth) * 2.0 - 1.0;
     vec3 viewPos = projectAndDivide(gbufferProjectionInverse, NDCPos);
     vec3 feetPlayerPos = (gbufferModelViewInverse * vec4(viewPos, 1.0)).xyz;
     vec3 shadowViewPos = (shadowModelView * vec4(feetPlayerPos, 1.0)).xyz;
     vec4 shadowClipPos = shadowProjection * vec4(shadowViewPos, 1.0);
-    shadowClipPos.z -= 0.0018; // 偏移
+
+    // 应用畸变
     shadowClipPos.xyz = distortShadowClipPos(shadowClipPos.xyz);
     vec3 shadowNDCPos = shadowClipPos.xyz / shadowClipPos.w;
     vec3 shadowScreenPos = shadowNDCPos * 0.5 + 0.5;
 
-    vec2 lightmap = texture(colortex1, texcoord).rg;
-    vec3 encodedNormal = texture(colortex2, texcoord).rgb;
-    vec3 normal = normalize((encodedNormal - 0.5) * 2.0);
-
-    vec3 lightVector = normalize(shadowLightPosition);
-    vec3 worldLightVector = mat3(gbufferModelViewInverse) * lightVector;
+    float cosTheta = clamp(dot(normal, worldLightVector), 0.0, 1.0);
+    float bias = 0.001 + 0.004 * (1.0 - cosTheta);
+    shadowScreenPos.z -= bias;
 
     #if SHADOW_SOFT == 0
     float shadow = step(shadowScreenPos.z, texture(shadowtex0, shadowScreenPos.xy).r);
@@ -81,19 +85,31 @@ void main() {
     // -----------------------
     #endif
 
-    // 光照计算
-    vec3 blocklight = lightmap.r * lightmap.r * blocklightColor;
+    // --- 光照合成 ---
+    vec3 blocklight = pow(lightmap.r, 3.0) * blocklightColor * 2.0;
+    vec3 skylight = lightmap.g * skylightColor * dayNightStrength * 0.55;
 
-    //天空光增益和计算～
-    #if SKYLIGHT_GAIN == 0.1
-    vec3 skylight = lightmap.g * (SKYLIGHT_GAIN + skylightColor) * dayNightStrength;
-    #else
-    vec3 skylight = lightmap.g * skylightColor * dayNightStrength;
-    #endif
-
-    vec3 sunlight = sunlightColor * clamp(dot(worldLightVector, normal), 0.0, 1.0) * shadow * (1 - rainStrength) * dayNightStrength;
+    float directLight = dot(worldLightVector, normal);
+    float diffuse = clamp(directLight * 0.8 + 0.2, 0.0, 1.0);
+    vec3 sunlight = sunlightColor * (diffuse * shadow * (1.0 - rainStrength) * dayNightStrength * 2.5);
 
     color = texture(colortex0, texcoord);
-    color.rgb *= pow(blocklight, vec3(5.0)) * 3.0 + skylight + sunlight + vec3(0.15);
-    color.rgb = pow(color.rgb, vec3(2.2));
+
+    // 基础光照合成
+    vec3 sceneLight = blocklight + skylight + sunlight + vec3(0.05); // 0.05 是基础环境微光
+    color.rgb *= sceneLight;
+
+    color.rgb = pow(color.rgb, vec3(1.8));
+
+    float luma = dot(color.rgb, vec3(0.2126, 0.7152, 0.0722));
+    color.rgb = mix(vec3(luma), color.rgb, 1.0);
+
+    vec3 x = color.rgb * 0.3; // 曝光补偿
+    color.rgb = clamp((x*(2.51*x+0.03))/(x*(2.43*x+0.59)+0.14), 0.0, 1.0);
+
+    //color.rgb = pow(color.rgb, vec3(1.0/2.2));
+
+    float noise = fract(sin(dot(texcoord, vec2(12.9898, 78.233))) * 43758.5453);
+    //color.rgb *= mix(vec3(1.), vec3(1.15, 0.95, 0.8), 1.0);
+    color.rgb += (noise - 0.5) * (1.0/255.0);
 }
