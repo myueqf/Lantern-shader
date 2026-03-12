@@ -21,7 +21,7 @@ float knee = 0.5; // 软阈值范围
 float bloomScale = 0.03; // 发光强度缩放
 float noiseScale1 = 0.005; // 近距离噪声幅度
 float noiseScale2 = 0.012; // 远距离噪声幅度
-#define EXPONENT 1.0 // [0.5 1.0 1.5 2.0 2.5] 强度
+#define EXPONENT 10.0 // [0.5 1.0 1.5 2.0 2.5] 强度
 float exponent = EXPONENT;
 
 /* 昼夜亮度增益 */
@@ -34,7 +34,7 @@ float exponent = EXPONENT;
 #define FOG_COVER_SKY 0 // [0 1] 雾覆盖天空
 
 /* 天空颜色样式 */
-#define SKYCOLORSTYLE 0 // [0 1]
+#define SKYCOLORSTYLE 1 // [0 1]
 
 /* Gamma */
 #define GAMMA 0.95 // [0.55 0.65 0.75 0.85 0.95 1.00 1.25 1.33 1.40 1.55]
