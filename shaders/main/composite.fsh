@@ -135,8 +135,12 @@ void main() {
     }
     else {
         // 白天
-        color.rgb *= mix(vec3(1.), vec3(1.15, 0.95, 0.8), 0.15);
+        color.rgb *= mix(vec3(1.), vec3(1.15, 0.95, 0.8), 0.43);
     }
+    float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
+    color.rgb = mix(vec3(gray), color.rgb, 1.1);
+
+
 
     float noise = fract(sin(dot(texcoord, vec2(12.9898, 78.233) * float(worldTime))) * 43758.5453);
     color.rgb += noise * 0.003;
