@@ -9,25 +9,20 @@ in vec2 texcoord;
 in vec3 normal;
 in vec4 glcolor;
 
-/* RENDERTARGETS: 0,1,2 */
-layout(location = 0) out vec4 color;
-layout(location = 1) out vec4 lightmapData;
-layout(location = 2) out vec4 normalData;
+/* RENDERTARGETS: 5,6,7 */
+layout(location = 0) out vec4 translucentColor;
+layout(location = 1) out vec4 translucentLightmap;
+layout(location = 2) out vec4 translucentNormal;
 
 void main() {
-    color = texture(gtexture, texcoord) * glcolor;
+    translucentColor = texture(gtexture, texcoord) * glcolor;
+
+    if (translucentColor.a <= 0.05) discard;
 
     if (isEyeInWater == 1) {
-        color.a = 0.9;
-        return;
-    }
-    if (color.a <= 0.05) discard;
-    if (color.a < 0.75) {
-        ivec2 px = ivec2(gl_FragCoord.xy) % 2;
-        if ((px.x ^ px.y) == 0) discard;
+        translucentColor.a = 0.9;
     }
 
-    color.a = 1.0;
-    lightmapData = vec4(lmcoord, 0.0, 1.0);
-    normalData = vec4(normal * 0.5 + 0.5, 1.0);
+    translucentLightmap = vec4(lmcoord, 0.0, 1.0);
+    translucentNormal = vec4(normal * 0.5 + 0.5, 1.0);
 }
